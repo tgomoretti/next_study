@@ -2,11 +2,11 @@ import { sql } from '@vercel/postgres';
 import {
   CustomerField,
   CustomersTableType,
-  InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
   User,
   Revenue,
+  Invoice,
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
@@ -153,7 +153,7 @@ export async function fetchInvoicesPages(query: string) {
 export async function fetchInvoiceById(id: string) {
   noStore();
   try {
-    const data = await sql<InvoiceForm>`
+    const data = await sql<Invoice>`
       SELECT
         invoices.id,
         invoices.customer_id,
